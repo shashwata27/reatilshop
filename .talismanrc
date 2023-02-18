@@ -1,0 +1,10 @@
+fileignoreconfig:
+- filename: src/main/resources/dbScripts/customerInsertData.sql
+  checksum: 7ecc299bcc22f85caaef43aa15f03125d41484cd379be61e81f9a181853b6f3c
+- filename: src/main/resources/dbScripts/inventoryInsertData.sql
+  checksum: b061bb2b87e537bc8f15ba2c3cc719a5330b0dd1d46a90d7a3b8fe7278b9b2a1
+- filename: src/main/resources/dbScripts/itemInsertData.sql
+  checksum: 5b88ab898c4c87b0561f48bca6e3f5c30e4267b326d91ed97658d87286d4890d
+- filename: mvnw
+  checksum: 525d6897dc14f8a1884cdb1cfd0fdf8179230a04afcddca9158c09040117ae85
+version: ""
