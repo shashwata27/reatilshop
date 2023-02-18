@@ -32,6 +32,27 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
+    @GetMapping("/customers/name/{name}")
+    public ResponseEntity<Customer> getCustomersByName(@PathVariable String name) {
+        Customer customer = customerRepository.findByName(name)
+                .orElseThrow(() -> new ResourseNotFoundException(
+                        MessageFormat.format("Customer with name: {0} does not exist. You sure?", name))
+                );
+        return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping("/customers/phone-number/{phoneNumber}")
+    public ResponseEntity<List<Customer>> getAllCustomersByPhoneNumber(@PathVariable String phoneNumber) {
+        ResourseNotFoundException customerByPhoneNumberNotFoundException = new ResourseNotFoundException(
+                MessageFormat.format("Customer with PhoneNumber: {0} does not exist. Check number.", phoneNumber));
+
+        List<Customer> customer = customerRepository.findAllByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> customerByPhoneNumberNotFoundException
+                );
+        if(customer.size()==0) throw customerByPhoneNumberNotFoundException;
+        return ResponseEntity.ok(customer);
+    }
+
     @PostMapping("/customers")
     public ResponseEntity<List<Customer>> createCustomer(@RequestBody List<Customer> customers) {
         List<Customer> insertedCustomers = new ArrayList<>();
