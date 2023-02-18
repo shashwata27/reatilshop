@@ -37,7 +37,7 @@ public class CustomerController {
         List<Customer> insertedCustomers = new ArrayList<>();
         List<Integer> presentCustomers = new ArrayList<>();
         customers.forEach(customer -> {
-            if (customerRepository.findById(customer.getId()).isPresent()) presentCustomers.add(customer.getId());
+            if (customerRepository.findById(customer.getCustomer_id()).isPresent()) presentCustomers.add(customer.getCustomer_id());
         });
         if (!presentCustomers.isEmpty()) {
             throw new ResourseAlredyExistsException(presentCustomers);

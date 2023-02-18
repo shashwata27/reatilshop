@@ -1,44 +1,40 @@
 package com.pet.project.retailshop.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Date;
 
 @ToString
 @Entity
 @Table(name = "inventory")
+@NoArgsConstructor
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private int id;
+    private int inventory_id;
 
-    @Column
-    @Getter
-    @Setter
-    private int item_id;
-
-    @Column
     @Getter
     @Setter
     private int stock;
 
-    @Column(name = "last_restocking_date")
     @Getter
     @Setter
+    @Column(name = "last_restocking_date")
     private Date lastRestockingDate;
 
-    public Inventory() {
-    }
+    @Getter
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
 
-    public Inventory(int item_id, int stock, Date lastRestockingDate) {
-        this.item_id = item_id;
+
+    public Inventory(int stock, Date lastRestockingDate, Item item) {
+        this.item = item;
         this.stock = stock;
         this.lastRestockingDate = lastRestockingDate;
     }
-
 }

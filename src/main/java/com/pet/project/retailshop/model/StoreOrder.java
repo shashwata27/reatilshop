@@ -2,6 +2,7 @@ package com.pet.project.retailshop.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,13 +10,14 @@ import java.util.Date;
 
 @ToString
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "store_order")
+@NoArgsConstructor
+public class StoreOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private int id;
+    private int order_id;
 
     @Column
     @Getter
@@ -32,34 +34,20 @@ public class Order {
     @Setter
     private Boolean fulfilled;
 
-//    @Column(name = "customer_id")
-//    @Getter
-//    @Setter
-//    private int customerId;
-
-//    @Column(name = "item_id")
-//    @Getter
-//    @Setter
-//    private int itemId;
-
+//  one order can have only one type of item for simplicity
     @Getter
     @Setter
-    @OneToOne(optional = false, orphanRemoval = true)
+    @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
     @Getter
     @Setter
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-
-
-    public Order() {
-    }
-
-    public Order(Float value, Date date, Boolean fulfilled, Item item, Customer customer) {
+    public StoreOrder(Float value, Date date, Boolean fulfilled, Item item, Customer customer) {
         this.value = value;
         this.date = date;
         this.fulfilled = fulfilled;

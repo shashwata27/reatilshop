@@ -1,7 +1,7 @@
 package com.pet.project.retailshop.controller;
 
-import com.pet.project.retailshop.model.Order;
-import com.pet.project.retailshop.repository.OrderRepository;
+import com.pet.project.retailshop.model.StoreOrder;
+import com.pet.project.retailshop.repository.StoreOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1")
-public class OrderController {
+public class StoreOrderController {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private StoreOrderRepository storeOrderRepository;
 
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        return ResponseEntity.ok(orderRepository.findAll());
+    public ResponseEntity<List<StoreOrder>> getAllOrders() {
+        return ResponseEntity.ok(storeOrderRepository.findAll());
     }
 }

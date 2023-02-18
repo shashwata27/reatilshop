@@ -37,7 +37,7 @@ public class ItemController {
         List<Item> insertedItems = new ArrayList<>();
         List<Integer> presentItems = new ArrayList<>();
         items.forEach(item -> {
-            if (itemRepository.findById(item.getId()).isPresent()) presentItems.add(item.getId());
+            if (itemRepository.findById(item.getItem_id()).isPresent()) presentItems.add(item.getItem_id());
         });
         if (!presentItems.isEmpty()) {
             throw new ResourseAlredyExistsException(presentItems);
