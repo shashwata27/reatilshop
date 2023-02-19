@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Size;
+
+
 @ToString
 @Entity
 @Table(name = "customer")
@@ -20,6 +23,7 @@ public class Customer {
     @Column
     @Getter
     @Setter
+    @Size(min = 3,message ="Name should be at least 3 characters.")
     private String name;
 
     @Column
@@ -30,6 +34,7 @@ public class Customer {
     @Column
     @Getter
     @Setter
+    @Size(min = 12,message ="PhoneNumber should be at least 12 digits.")
     private String phoneNumber;
 
 

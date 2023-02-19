@@ -8,5 +8,9 @@ fileignoreconfig:
 - filename: mvnw
   checksum: 525d6897dc14f8a1884cdb1cfd0fdf8179230a04afcddca9158c09040117ae85
 - filename: src/main/resources/dbScripts/orderInsertData.sql
-  checksum: 9b36b0b638521bba14518167be982520dd87c8f22c56236754b23c93aedc80e4
+  checksum: 68c535e21d89fdfe22699eb5c524c647f4aef1aee15b6b732bdb60199f7710df
+- filename: src/main/resources/data.sql
+  checksum: c24026094567bb7802637413973b681bae38dfa5fbfd978223fe4d36463f2f0e
+- filename: src/main/resources/dbScripts/orderInsertData.sql
+  checksum: 68c535e21d89fdfe22699eb5c524c647f4aef1aee15b6b732bdb60199f7710df
 version: ""
