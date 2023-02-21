@@ -10,7 +10,7 @@ fileignoreconfig:
 - filename: src/main/resources/dbScripts/orderInsertData.sql
   checksum: 68c535e21d89fdfe22699eb5c524c647f4aef1aee15b6b732bdb60199f7710df
 - filename: src/main/resources/data.sql
-  checksum: c24026094567bb7802637413973b681bae38dfa5fbfd978223fe4d36463f2f0e
+  checksum: fad3a2a6c0a088db5185023397de17c266bfce46b217d587000ac9f2161186dd
 - filename: src/main/resources/dbScripts/orderInsertData.sql
   checksum: 68c535e21d89fdfe22699eb5c524c647f4aef1aee15b6b732bdb60199f7710df
 version: ""

@@ -7,7 +7,9 @@ import com.pet.project.retailshop.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +55,15 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
+    /**
+     * Response Code 201
+     * */
     @PostMapping("/customers")
-    public ResponseEntity<List<Customer>> createCustomer(@RequestBody List<Customer> customers) {
+    public List<ResponseEntity<Object>> createCustomer(@RequestBody List<Customer> customers) {
         List<Customer> insertedCustomers = new ArrayList<>();
         List<Integer> presentCustomers = new ArrayList<>();
+        List<ResponseEntity<Object>> createResponse=new ArrayList<>();
+
         customers.forEach(customer -> {
             if (customerRepository.findById(customer.getCustomer_id()).isPresent()) presentCustomers.add(customer.getCustomer_id());
         });
@@ -64,9 +71,22 @@ public class CustomerController {
             throw new ResourseAlredyExistsException(presentCustomers);
         }
         customers.forEach(customer -> insertedCustomers.add(customerRepository.save(customer)));
-        return ResponseEntity.ok(insertedCustomers);
+        insertedCustomers.forEach( insertedCustomer->
+                {
+                    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                            .path("/{customerId}").buildAndExpand(insertedCustomer.getCustomer_id()).toUri();
+                    createResponse.add(ResponseEntity.created(location).body(insertedCustomer));
+                }
+        );
+
+
+        return createResponse;
     }
 
+
+    /**
+     * Response Code 200 or 204
+     * */
     @RequestMapping(value={"/customers/{id}", "/customers/{id}/update"}, method={RequestMethod.PUT,RequestMethod.PATCH})
     public ResponseEntity<Customer> updateCustomer(@PathVariable int id, @RequestBody Customer customerDetails) {
         Customer updatingCustomer = customerRepository.findById(id)
@@ -87,15 +107,17 @@ public class CustomerController {
     }
 
 
-
+    /**
+     * Response Code 204
+     * */
     @DeleteMapping("customers/{id}")
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable int id) {
+    public ResponseEntity<Object> deleteCustomer(@PathVariable int id) {
         Customer deletingCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourseNotFoundException(
                         MessageFormat.format("Customer with id: {0} doesn't exist", id)
                 ));
         customerRepository.delete(deletingCustomer);
-        return ResponseEntity.ok(deletingCustomer);
+        return ResponseEntity.noContent().build();
     }
 
 

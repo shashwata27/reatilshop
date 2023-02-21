@@ -8,4 +8,5 @@
 --      END IF;
 --    END;
 --    $$;
+SELECT 1;
 
