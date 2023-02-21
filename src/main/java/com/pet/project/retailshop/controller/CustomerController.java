@@ -62,7 +62,7 @@ public class CustomerController {
     public List<ResponseEntity<Object>> createCustomer(@RequestBody List<Customer> customers) {
         List<Customer> insertedCustomers = new ArrayList<>();
         List<Integer> presentCustomers = new ArrayList<>();
-        List<ResponseEntity<Object>> createResponse=new ArrayList<>();
+        List<ResponseEntity<Object>> createdResponse=new ArrayList<>();
 
         customers.forEach(customer -> {
             if (customerRepository.findById(customer.getCustomer_id()).isPresent()) presentCustomers.add(customer.getCustomer_id());
@@ -75,12 +75,12 @@ public class CustomerController {
                 {
                     URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                             .path("/{customerId}").buildAndExpand(insertedCustomer.getCustomer_id()).toUri();
-                    createResponse.add(ResponseEntity.created(location).body(insertedCustomer));
+                    createdResponse.add(ResponseEntity.created(location).body(insertedCustomer));
                 }
         );
 
 
-        return createResponse;
+        return createdResponse;
     }
 
 

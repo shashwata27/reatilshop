@@ -1,14 +1,14 @@
 package com.pet.project.retailshop.controller;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -62,6 +62,7 @@ class CustomerControllerIntegrationTest {
         JSONAssert.assertEquals(expectedCustomerByName, actualCustomerByNameBody,true);
     }
 
+    /*Has SIDE_EFFECTS*/
     @Test
     void getAllCustomersByPhoneNumber_IntegrationTest() throws JSONException {
         String expectedCustomerByPhoneNumber=
@@ -84,6 +85,58 @@ class CustomerControllerIntegrationTest {
         assertTrue(actualCustomerByPhoneNumberStatusCode.is2xxSuccessful());
         assertEquals("application/json",actualCustomerByPhoneNumberContentType);
         JSONAssert.assertEquals(expectedCustomerByPhoneNumber, actualCustomerByPhoneNumberBody,true);
+    }
+
+
+    @Test
+    void createCustomer_IntegrationTest() throws JSONException {
+        String requestBody=
+                """
+                [{\040\040
+                    "name":"subi sam",
+                    "address":"pent house 312",
+                    "phoneNumber": "9090-080-091"
+                 
+                },{\040\040
+                    "name":"lashyi saha",
+                    "address":"pent house 312",
+                    "phoneNumber": "9090-080-192"
+                 
+                }]
+                """;
+        HttpHeaders requestHeader=new HttpHeaders();
+        requestHeader.add("Content-Type","application/json");
+        HttpEntity<String> request=new HttpEntity<String>(requestBody,requestHeader);
+        String expectedResponseBody= """
+                [
+                    {
+                        "body": {
+                            "name": "subi sam",
+                            "address": "pent house 312",
+                            "phoneNumber": "9090-080-091"
+                        },
+                        "statusCodeValue": 201,
+                        "statusCode": "CREATED"
+                    },
+                    {
+                        "body": {
+                            "name": "lashyi saha",
+                            "address": "pent house 312",
+                            "phoneNumber": "9090-080-192"
+                        },
+                        "statusCodeValue": 201,
+                        "statusCode": "CREATED"
+                    }
+                ]
+                """;
+
+        ResponseEntity<String> response =
+                template.exchange(CUSTOMERS_API_GENERAL_URL, HttpMethod.POST, request, String.class);
+        HttpStatusCode statusCode = response.getStatusCode();
+        String responseBody = response.getBody();
+
+        assertTrue(statusCode.is2xxSuccessful());
+        JSONAssert.assertEquals(expectedResponseBody, responseBody,false);
     }
 
 }
